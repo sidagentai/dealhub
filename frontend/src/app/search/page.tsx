@@ -12,8 +12,7 @@ import DealCard from "@/components/DealCard";
 import { api } from "@/lib/api";
 import type { CategoryNode, Deal } from "@/lib/types";
 
-const inputClass =
-  "rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900";
+const inputClass = "field";
 
 function SearchContent() {
   const router = useRouter();
@@ -90,7 +89,7 @@ function SearchContent() {
           />
           <button
             type="submit"
-            className="rounded-md bg-emerald-600 px-5 py-2 text-sm font-medium text-white hover:bg-emerald-700"
+            className="btn-primary px-5"
           >
             Search
           </button>
@@ -114,7 +113,7 @@ function SearchContent() {
             ))}
           </select>
           <input
-            className={`${inputClass} w-28`}
+            className={`${inputClass} !w-28`}
             type="number"
             min="0"
             placeholder="Min $"
@@ -122,7 +121,7 @@ function SearchContent() {
             onChange={(e) => setMinPrice(e.target.value)}
           />
           <input
-            className={`${inputClass} w-28`}
+            className={`${inputClass} !w-28`}
             type="number"
             min="0"
             placeholder="Max $"
@@ -147,9 +146,9 @@ function SearchContent() {
           <DealCard key={deal.id} deal={deal} />
         ))}
       </div>
-      {loading && <p className="py-8 text-center text-zinc-400">Searching…</p>}
+      {loading && <p className="py-8 text-center text-ink-faint">Searching…</p>}
       {!loading && searched && deals.length === 0 && (
-        <p className="py-12 text-center text-zinc-500">
+        <p className="py-12 text-center text-ink-dim">
           No deals match your search.
         </p>
       )}
@@ -157,7 +156,7 @@ function SearchContent() {
         <div className="py-6 text-center">
           <button
             onClick={() => run(page + 1, false)}
-            className="rounded-md border border-zinc-300 px-4 py-2 text-sm hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-900"
+            className="btn-ghost"
           >
             Load more
           </button>

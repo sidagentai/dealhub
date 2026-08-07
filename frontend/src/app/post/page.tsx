@@ -7,8 +7,7 @@ import { api, ApiError } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import type { CategoryNode } from "@/lib/types";
 
-const inputClass =
-  "w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900";
+const inputClass = "field";
 
 export default function PostDealPage() {
   const { user, ready } = useAuth();
@@ -65,8 +64,8 @@ export default function PostDealPage() {
 
   if (ready && !user) {
     return (
-      <p className="py-12 text-center text-zinc-500">
-        <Link href="/login" className="text-emerald-600 hover:underline">
+      <p className="py-12 text-center text-ink-dim">
+        <Link href="/login" className="text-accent hover:underline">
           Log in
         </Link>{" "}
         to post deals.
@@ -75,7 +74,7 @@ export default function PostDealPage() {
   }
   if (ready && user && !user.isPoster) {
     return (
-      <p className="py-12 text-center text-zinc-500">
+      <p className="py-12 text-center text-ink-dim">
         Your account isn&apos;t a poster account. Sign up as a poster to share
         deals.
       </p>
@@ -84,7 +83,7 @@ export default function PostDealPage() {
 
   return (
     <div className="mx-auto max-w-xl">
-      <h1 className="mb-6 text-2xl font-bold">Post a deal</h1>
+      <h1 className="mb-6 text-2xl font-semibold tracking-tight">Post a deal</h1>
       <form onSubmit={onSubmit} className="space-y-4">
         <Field label="Deal link (your affiliate URL)">
           <input
@@ -184,11 +183,11 @@ export default function PostDealPage() {
             onChange={(e) => set("expiresAt", e.target.value)}
           />
         </Field>
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && <p className="text-sm text-red-400">{error}</p>}
         <button
           type="submit"
           disabled={busy}
-          className="w-full rounded-md bg-emerald-600 py-2.5 font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
+          className="btn-primary w-full !py-2.5"
         >
           {busy ? "Publishing…" : "Publish deal"}
         </button>
@@ -206,7 +205,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-sm font-medium text-zinc-600 dark:text-zinc-400">
+      <span className="mb-1 block text-[0.83rem] font-medium text-ink-dim">
         {label}
       </span>
       {children}

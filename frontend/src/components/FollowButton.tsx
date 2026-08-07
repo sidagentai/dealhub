@@ -20,11 +20,11 @@ export default function FollowButton({ userId }: { userId: number }) {
   return (
     <button
       onClick={toggle}
-      className={`rounded-full px-5 py-1.5 text-sm font-medium ${
+      className={
         following
-          ? "border border-zinc-300 text-zinc-600 dark:border-zinc-700 dark:text-zinc-400"
-          : "bg-emerald-600 text-white hover:bg-emerald-700"
-      }`}
+          ? "btn-ghost rounded-full px-5 !py-1.5"
+          : "btn-primary rounded-full px-5 !py-1.5"
+      }
     >
       {following ? "Following" : "Follow"}
     </button>

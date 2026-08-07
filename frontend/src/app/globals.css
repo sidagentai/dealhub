@@ -1,26 +1,135 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/*
+ * DealHub design system — Linear-inspired.
+ * Committed dark theme: layered near-black surfaces, hairline borders,
+ * one indigo accent for interaction, green reserved for the money.
+ */
+@theme {
+  --color-bg: #08090a;
+  --color-surface: #0f1011;
+  --color-surface-2: #16171a;
+  --color-ink: #f7f8f8;
+  --color-ink-dim: #8a8f98;
+  --color-ink-faint: #5e6369;
+  --color-line: #ffffff14;
+  --color-line-strong: #ffffff26;
+  --color-accent: #5e6ad2;
+  --color-accent-soft: #5e6ad21f;
+  --color-gain: #4cb782;
+  --color-gain-soft: #4cb7821f;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  letter-spacing: -0.011em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ambient aura behind the header, Linear-style: subtle, fixed, non-interactive */
+.aura {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(40rem 18rem at 50% -6rem, #5e6ad226, transparent 70%),
+    radial-gradient(30rem 14rem at 85% -4rem, #4cb78214, transparent 70%);
+}
+
+/* Interactive-card hover: lift + border lightening, transform/opacity only */
+.card-hover {
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-line-strong);
+  box-shadow: 0 8px 24px #00000066;
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-hover,
+  .card-hover:hover {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* Shared form control look */
+.field {
+  width: 100%;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  color: var(--color-ink);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.field::placeholder {
+  color: var(--color-ink-faint);
+}
+.field:focus {
+  outline: none;
+  border-color: #5e6ad280;
+  box-shadow: 0 0 0 3px #5e6ad226;
+}
+
+/* Primary action button */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  box-shadow: inset 0 1px 0 #ffffff1f;
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+.btn-primary:hover {
+  filter: brightness(1.12);
+}
+.btn-primary:active {
+  transform: translateY(1px);
+}
+.btn-primary:disabled {
+  opacity: 0.5;
+  filter: none;
+}
+
+/* Quiet secondary / ghost button */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-line);
+  color: var(--color-ink-dim);
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.5rem 0.85rem;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.btn-ghost:hover {
+  color: var(--color-ink);
+  border-color: var(--color-line-strong);
+  background: var(--color-surface-2);
+}
+.btn-ghost:disabled {
+  opacity: 0.4;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }

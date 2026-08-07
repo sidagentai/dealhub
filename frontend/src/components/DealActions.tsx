@@ -35,7 +35,7 @@ export default function DealActions({ deal }: { deal: Deal }) {
         href={clickThroughUrl(deal.id)}
         target="_blank"
         rel="noopener noreferrer"
-        className="rounded-lg bg-emerald-600 px-6 py-2.5 font-medium text-white hover:bg-emerald-700"
+        className="btn-primary px-6 !py-2.5"
       >
         Get this deal at {deal.retailer} →
       </a>
@@ -43,17 +43,13 @@ export default function DealActions({ deal }: { deal: Deal }) {
         onClick={toggleSave}
         disabled={!user}
         title={user ? undefined : "Log in to save"}
-        className={`rounded-lg border px-4 py-2.5 text-sm font-medium disabled:opacity-40 ${
-          saved
-            ? "border-emerald-600 text-emerald-600"
-            : "border-zinc-300 dark:border-zinc-700"
-        }`}
+        className={`btn-ghost !py-2.5 ${saved ? "!border-accent/50 !text-accent" : ""}`}
       >
         {saved ? "♥ Saved" : "♡ Save"}
       </button>
       <button
         onClick={share}
-        className="rounded-lg border border-zinc-300 px-4 py-2.5 text-sm font-medium dark:border-zinc-700"
+        className="btn-ghost !py-2.5"
       >
         {copied ? "Link copied!" : "Share"}
       </button>

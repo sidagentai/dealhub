@@ -33,7 +33,7 @@ export default function DealCard({ deal }: { deal: Deal }) {
   }
 
   return (
-    <article className="flex flex-col overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+    <article className="card-hover flex flex-col overflow-hidden rounded-xl border border-line bg-surface">
       <Link href={`/deal/${deal.id}`} className="block">
         {deal.imageUrl ? (
           // retailer-hosted images come from arbitrary domains; plain img on purpose
@@ -44,38 +44,41 @@ export default function DealCard({ deal }: { deal: Deal }) {
             className="h-40 w-full object-cover"
           />
         ) : (
-          <div className="flex h-40 w-full items-center justify-center bg-zinc-100 text-3xl dark:bg-zinc-800">
+          <div className="flex h-40 w-full items-center justify-center bg-surface-2 text-3xl">
             🏷️
           </div>
         )}
       </Link>
       <div className="flex flex-1 flex-col gap-2 p-4">
-        <div className="flex items-baseline gap-2">
+        <div className="flex items-baseline gap-2 font-mono tabular-nums">
           {deal.price !== null && (
-            <span className="text-lg font-bold text-emerald-600">
+            <span className="text-lg font-semibold text-gain">
               ${deal.price}
             </span>
           )}
           {deal.originalPrice !== null && deal.originalPrice !== deal.price && (
-            <span className="text-sm text-zinc-400 line-through">
+            <span className="text-sm text-ink-faint line-through">
               ${deal.originalPrice}
             </span>
           )}
           {discount !== null && (
-            <span className="rounded bg-emerald-100 px-1.5 py-0.5 text-xs font-semibold text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400">
+            <span className="rounded bg-gain-soft px-1.5 py-0.5 text-xs font-semibold text-gain">
               -{discount}%
             </span>
           )}
         </div>
         <Link
           href={`/deal/${deal.id}`}
-          className="line-clamp-2 font-medium hover:underline"
+          className="line-clamp-2 text-[0.95rem] font-medium tracking-tight hover:underline"
         >
           {deal.title}
         </Link>
-        <div className="text-xs text-zinc-500">
+        <div className="text-xs text-ink-dim">
           {deal.retailer} ·{" "}
-          <Link href={`/u/${deal.poster.id}`} className="hover:underline">
+          <Link
+            href={`/u/${deal.poster.id}`}
+            className="text-ink-dim transition-colors duration-150 hover:text-ink"
+          >
             @{deal.poster.handle}
           </Link>
         </div>
@@ -84,7 +87,7 @@ export default function DealCard({ deal }: { deal: Deal }) {
             href={clickThroughUrl(deal.id)}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 rounded-md bg-emerald-600 py-1.5 text-center text-sm font-medium text-white hover:bg-emerald-700"
+            className="btn-primary flex-1 !py-1.5"
           >
             Get deal
           </a>
@@ -92,11 +95,9 @@ export default function DealCard({ deal }: { deal: Deal }) {
             onClick={toggleSave}
             disabled={!user}
             title={user ? "Save" : "Log in to save"}
-            className={`rounded-md border px-2.5 py-1.5 text-sm ${
-              saved
-                ? "border-emerald-600 text-emerald-600"
-                : "border-zinc-300 text-zinc-500 dark:border-zinc-700"
-            } disabled:opacity-40`}
+            className={`btn-ghost !py-1.5 ${
+              saved ? "!border-accent/50 !text-accent" : ""
+            }`}
           >
             ♥ {saveCount}
           </button>

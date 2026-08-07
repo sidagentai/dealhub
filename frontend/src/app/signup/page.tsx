@@ -6,8 +6,7 @@ import { useRouter } from "next/navigation";
 import { api, ApiError } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 
-const inputClass =
-  "w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900";
+const inputClass = "field";
 
 export default function SignupPage() {
   const { signIn } = useAuth();
@@ -41,7 +40,7 @@ export default function SignupPage() {
 
   return (
     <div className="mx-auto mt-10 max-w-sm">
-      <h1 className="mb-6 text-2xl font-bold">Create your account</h1>
+      <h1 className="mb-6 text-2xl font-semibold tracking-tight">Create your account</h1>
       <form onSubmit={onSubmit} className="space-y-4">
         <input
           className={inputClass}
@@ -86,18 +85,18 @@ export default function SignupPage() {
           />
           I want to post deals (build a following, track clicks)
         </label>
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && <p className="text-sm text-red-400">{error}</p>}
         <button
           type="submit"
           disabled={busy}
-          className="w-full rounded-md bg-emerald-600 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
+          className="btn-primary w-full"
         >
           {busy ? "Creating…" : "Sign up"}
         </button>
       </form>
-      <p className="mt-4 text-sm text-zinc-500">
+      <p className="mt-4 text-sm text-ink-dim">
         Already have an account?{" "}
-        <Link href="/login" className="text-emerald-600 hover:underline">
+        <Link href="/login" className="text-accent hover:underline">
           Log in
         </Link>
       </p>

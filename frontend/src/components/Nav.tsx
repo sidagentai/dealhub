@@ -36,7 +36,7 @@ export default function Nav() {
           Deal<span className="text-accent">Hub</span>
         </Link>
         <nav className="flex items-center gap-0.5">
-          <NavLink href="/" label="Feed" />
+          <NavLink href="/feed" label="Feed" />
           <NavLink href="/search" label="Search" />
           <NavLink href="/posters" label="Posters" />
           {user?.isPoster && <NavLink href="/post" label="Post a deal" />}

@@ -1,183 +1,153 @@
-"use client";
-
-import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import DealCard from "@/components/DealCard";
-import { api, ApiError } from "@/lib/api";
-import { useAuth } from "@/lib/auth";
-import type { CategoryNode, Deal } from "@/lib/types";
+import { API_URL } from "@/lib/api";
+import type { Deal, Page } from "@/lib/types";
 
-type Mode = "trending" | "following";
+export const dynamic = "force-dynamic";
 
-export default function FeedPage() {
-  const { user, ready } = useAuth();
-  const [mode, setMode] = useState<Mode>("trending");
-  const [category, setCategory] = useState<number | undefined>();
-  const [categories, setCategories] = useState<CategoryNode[]>([]);
-  const [deals, setDeals] = useState<Deal[]>([]);
-  const [page, setPage] = useState(0);
-  const [hasMore, setHasMore] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const sentinel = useRef<HTMLDivElement>(null);
+async function fetchLive(): Promise<{ deals: Deal[]; posters: number }> {
+  try {
+    const [feedRes, postersRes] = await Promise.all([
+      fetch(`${API_URL}/feed?mode=trending&size=3`, { cache: "no-store" }),
+      fetch(`${API_URL}/posters`, { cache: "no-store" }),
+    ]);
+    const feed: Page<Deal> = feedRes.ok
+      ? await feedRes.json()
+      : { items: [], page: 0, hasMore: false };
+    const posters = postersRes.ok
+      ? ((await postersRes.json()) as unknown[]).length
+      : 0;
+    return { deals: feed.items, posters };
+  } catch {
+    return { deals: [], posters: 0 };
+  }
+}
 
-  useEffect(() => {
-    api.categories().then(setCategories).catch(() => {});
-  }, []);
+const FEATURES = [
+  {
+    title: "Follow the hunters",
+    body: "Great deals come from people who hunt them daily, not from banner ads. Build a feed from posters whose taste you trust.",
+  },
+  {
+    title: "Price history, built in",
+    body: "Every price change is recorded from the moment a deal is posted. See the real discount, not the marketing one.",
+  },
+  {
+    title: "Every click counted",
+    body: "Posters see exactly how their deals perform — clicks, saves, top performers. An audience you can measure is an audience you can grow.",
+  },
+];
 
-  const load = useCallback(
-    async (nextPage: number, replace: boolean) => {
-      setLoading(true);
-      setError(null);
-      try {
-        const result = await api.feed({ mode, category, page: nextPage });
-        setDeals((d) => (replace ? result.items : [...d, ...result.items]));
-        setPage(nextPage);
-        setHasMore(result.hasMore);
-      } catch (err) {
-        setError(
-          err instanceof ApiError ? err.message : "couldn't load the feed",
-        );
-      } finally {
-        setLoading(false);
-      }
-    },
-    [mode, category],
-  );
-
-  useEffect(() => {
-    if (!ready) return;
-    load(0, true);
-  }, [ready, load]);
-
-  // infinite scroll
-  useEffect(() => {
-    const el = sentinel.current;
-    if (!el || !hasMore || loading) return;
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) load(page + 1, false);
-    });
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [hasMore, loading, page, load]);
+export default async function LandingPage() {
+  const { deals, posters } = await fetchLive();
 
   return (
-    <div>
-      <div className="mb-4 flex w-fit gap-1 rounded-lg border border-line bg-surface p-1">
-        <TabButton
-          active={mode === "trending"}
-          onClick={() => setMode("trending")}
-        >
-          For you
-        </TabButton>
-        <TabButton
-          active={mode === "following"}
-          onClick={() => setMode("following")}
-        >
-          Following
-        </TabButton>
-      </div>
-
-      <div className="mb-6 flex gap-2 overflow-x-auto pb-1">
-        <Chip active={category === undefined} onClick={() => setCategory(undefined)}>
-          All
-        </Chip>
-        {categories.map((c) => (
-          <Chip
-            key={c.id}
-            active={category === c.id}
-            onClick={() => setCategory(c.id)}
-          >
-            {c.name}
-          </Chip>
-        ))}
-      </div>
-
-      {mode === "following" && !user && ready ? (
-        <p className="py-12 text-center text-ink-dim">
-          <Link href="/login" className="text-accent hover:underline">
-            Log in
-          </Link>{" "}
-          to see deals from posters you follow.
+    <div className="flex flex-col gap-24 pb-16">
+      {/* Hero */}
+      <section className="pt-16 text-center sm:pt-24">
+        <h1 className="mx-auto max-w-3xl text-balance text-4xl font-semibold leading-[1.1] tracking-tighter sm:text-6xl">
+          Deals from people,
+          <br />
+          not algorithms.
+        </h1>
+        <p className="mx-auto mt-6 max-w-xl text-balance text-base leading-relaxed text-ink-dim sm:text-lg">
+          DealHub is where deal hunters build a following. Follow posters with
+          taste, watch real price history, and never wonder if a deal is
+          actually a deal.
         </p>
-      ) : error ? (
-        <p className="py-12 text-center text-red-400">{error}</p>
-      ) : (
-        <>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {deals.map((deal) => (
-              <DealCard key={deal.id} deal={deal} />
-            ))}
+        <div className="mt-8 flex items-center justify-center gap-3">
+          <Link href="/feed" className="btn-primary px-6 !py-2.5 text-[0.95rem]">
+            Browse deals
+          </Link>
+          <Link href="/signup" className="btn-ghost px-6 !py-2.5 text-[0.95rem]">
+            Become a poster
+          </Link>
+        </div>
+        {posters > 0 && (
+          <p className="mt-6 text-xs font-medium uppercase tracking-wider text-ink-faint">
+            <span className="font-mono tabular-nums">{posters}</span> posters
+            hunting deals right now
+          </p>
+        )}
+      </section>
+
+      {/* Live trending panel */}
+      {deals.length > 0 && (
+        <section className="relative">
+          <div
+            className="pointer-events-none absolute -inset-x-8 -top-16 -bottom-8 -z-10"
+            style={{
+              background:
+                "radial-gradient(38rem 16rem at 50% 30%, #5e6ad222, transparent 70%)",
+            }}
+            aria-hidden="true"
+          />
+          <div className="mb-4 flex items-baseline justify-between">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-ink-dim">
+              Trending right now
+            </h2>
+            <Link
+              href="/feed"
+              className="text-sm text-accent hover:underline"
+            >
+              See the full feed →
+            </Link>
           </div>
-          {!loading && deals.length === 0 && (
-            <p className="py-12 text-center text-ink-dim">
-              {mode === "following" ? (
-                <>
-                  No deals yet from posters you follow.{" "}
-                  <Link
-                    href="/posters"
-                    className="text-accent hover:underline"
-                  >
-                    Find posters to follow →
-                  </Link>
-                </>
-              ) : (
-                "No deals posted yet."
-              )}
-            </p>
-          )}
-          {loading && (
-            <p className="py-8 text-center text-ink-faint">Loading…</p>
-          )}
-          <div ref={sentinel} />
-        </>
+          <div className="rounded-2xl border border-line bg-surface/60 p-4 shadow-[0_0_40px_#5e6ad214] backdrop-blur sm:p-6">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              {deals.map((deal) => (
+                <DealCard key={deal.id} deal={deal} />
+              ))}
+            </div>
+          </div>
+        </section>
       )}
+
+      {/* Features */}
+      <section className="grid grid-cols-1 gap-10 sm:grid-cols-3">
+        {FEATURES.map((f) => (
+          <div key={f.title}>
+            <div
+              className="mb-4 h-px w-8 bg-accent"
+              aria-hidden="true"
+            />
+            <h3 className="mb-2 font-medium tracking-tight">{f.title}</h3>
+            <p className="text-sm leading-relaxed text-ink-dim">{f.body}</p>
+          </div>
+        ))}
+      </section>
+
+      {/* Bottom CTA */}
+      <section className="rounded-2xl border border-line bg-surface px-6 py-12 text-center">
+        <h2 className="text-balance text-2xl font-semibold tracking-tight">
+          Your next favorite deal is already posted.
+        </h2>
+        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-ink-dim">
+          Free to browse, free to follow. Posters keep full ownership of their
+          affiliate links.
+        </p>
+        <div className="mt-6 flex items-center justify-center gap-3">
+          <Link href="/feed" className="btn-primary px-6">
+            Start browsing
+          </Link>
+          <Link href="/signup" className="btn-ghost px-6">
+            Sign up
+          </Link>
+        </div>
+      </section>
+
+      <footer className="border-t border-line pt-6 text-center text-xs text-ink-faint">
+        DealHub — a social deals platform. Built in the open at{" "}
+        <a
+          href="https://github.com/sidagentai/dealhub"
+          className="text-ink-dim hover:text-ink"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          github.com/sidagentai/dealhub
+        </a>
+        .
+      </footer>
     </div>
-  );
-}
-
-function TabButton({
-  active,
-  onClick,
-  children,
-}: {
-  active: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={`rounded-lg px-4 py-1.5 text-sm font-medium transition-colors duration-150 ${
-        active
-          ? "bg-surface-2 text-ink shadow-[inset_0_1px_0_#ffffff14]"
-          : "text-ink-dim hover:text-ink"
-      }`}
-    >
-      {children}
-    </button>
-  );
-}
-
-function Chip({
-  active,
-  onClick,
-  children,
-}: {
-  active: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={`whitespace-nowrap rounded-full border px-3 py-1 text-xs font-medium transition-colors duration-150 ${
-        active
-          ? "border-accent/50 bg-accent-soft text-ink"
-          : "border-line text-ink-dim hover:border-line-strong hover:text-ink"
-      }`}
-    >
-      {children}
-    </button>
   );
 }

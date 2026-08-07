@@ -31,7 +31,7 @@ export default function SignupPage() {
     setError(null);
     try {
       signIn(await api.signup(form));
-      router.push("/");
+      router.push("/feed");
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "something went wrong");
       setBusy(false);

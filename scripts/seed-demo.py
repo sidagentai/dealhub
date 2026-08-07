@@ -79,6 +79,31 @@ POSTERS = [
     },
 ]
 
+IMAGES = {
+    "sony-oled": "photo-1593359677879-a4bb92f829d1",
+    "airpods-pro": "photo-1572569511254-d8f925fe2cbb",
+    "anker-bank": "photo-1586953208448-b95a79798f07",
+    "dell-monitor": "photo-1527443224154-c4a3942d3acf",
+    "amex-gold": "photo-1563013544-824ae1b704d3",
+    "citi-bonus": "photo-1501167786227-4cba60f6d58f",
+    "freedom-flex": "photo-1556742049-0cfed4f6a45d",
+    "lodge-castiron": "photo-1556909114-f6e7ad7d3136",
+    "roborock": "photo-1558317374-067fb5f30001",
+    "hue-kit": "photo-1507473885765-e6ed057f782c",
+    "ninja-creami": "photo-1497034825429-c343d7c6a68f",
+    "sfo-tokyo": "photo-1436491865332-7a61a109cc05",
+    "hyatt-certs": "photo-1566073771259-6a8506099945",
+    "nyc-lisbon": "photo-1529074963764-98f45c47344b",
+    "nb-990": "photo-1595950653106-6c9ebd614d3a",
+    "uniqlo-tees": "photo-1521572163474-6864f9cf17ab",
+    "vomero-5": "photo-1600185365483-26d7a4cc7519",
+}
+
+def image_url(slug):
+    """Curated, verified product photos keyed by deal slug."""
+    return f"https://images.unsplash.com/{IMAGES[slug]}?w=640&h=400&fit=crop&q=80"
+
+
 BROWSERS = [
     {"handle": "bargainben", "displayName": "Bargain Ben"},
     {"handle": "savvysara", "displayName": "Savvy Sara"},
@@ -149,7 +174,7 @@ def main():
                 "title": title, "description": desc,
                 "categoryId": cat_ids[cat], "retailer": retailer,
                 "affiliateUrl": f"https://example.com/{slug}?aff={poster['handle']}",
-                "imageUrl": f"https://picsum.photos/seed/{slug}/640/400",
+                "imageUrl": image_url(slug),
             }
             if price is not None:
                 body["price"] = price

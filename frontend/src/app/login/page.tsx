@@ -20,7 +20,7 @@ export default function LoginPage() {
     setError(null);
     try {
       signIn(await api.login(handleOrEmail, password));
-      router.push("/");
+      router.push("/feed");
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "something went wrong");
       setBusy(false);

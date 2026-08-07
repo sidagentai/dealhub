@@ -13,6 +13,11 @@ spring:
     enabled: true
     locations: classpath:db/migration
 
+app:
+  jwt:
+    # override in any real environment; local-dev fallback only
+    secret: ${JWT_SECRET:dealhub-local-dev-secret-change-me-0123456789}
+
 server:
   port: ${PORT:8080}
 

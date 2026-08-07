@@ -4,6 +4,7 @@ import type {
   Deal,
   DealDetail,
   Page,
+  PosterCard,
   StatsResponse,
   UserProfile,
 } from "./types";
@@ -124,6 +125,18 @@ export const api = {
     request<Deal>("/deals", { method: "POST", body: JSON.stringify(data) }),
 
   user: (id: number) => request<UserProfile>(`/users/${id}`),
+
+  posters: () => request<PosterCard[]>("/posters"),
+
+  updateProfile: (data: {
+    displayName?: string;
+    bio?: string;
+    avatarUrl?: string;
+  }) =>
+    request<UserProfile>("/users/me", {
+      method: "PATCH",
+      body: JSON.stringify(data),
+    }),
 
   userDeals: (id: number, page = 0) =>
     request<Page<Deal>>(`/users/${id}/deals?page=${page}`),

@@ -38,6 +38,7 @@ export default function Nav() {
         <nav className="flex items-center gap-0.5">
           <NavLink href="/" label="Feed" />
           <NavLink href="/search" label="Search" />
+          <NavLink href="/posters" label="Posters" />
           {user?.isPoster && <NavLink href="/post" label="Post a deal" />}
         </nav>
         <div className="ml-auto flex items-center gap-2">

@@ -4,9 +4,15 @@ import { useState } from "react";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 
-export default function FollowButton({ userId }: { userId: number }) {
+export default function FollowButton({
+  userId,
+  initialFollowing = false,
+}: {
+  userId: number;
+  initialFollowing?: boolean;
+}) {
   const { user } = useAuth();
-  const [following, setFollowing] = useState(false);
+  const [following, setFollowing] = useState(initialFollowing);
 
   if (!user || user.id === userId) return null;
 

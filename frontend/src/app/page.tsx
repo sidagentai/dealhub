@@ -111,9 +111,19 @@ export default function FeedPage() {
           </div>
           {!loading && deals.length === 0 && (
             <p className="py-12 text-center text-ink-dim">
-              {mode === "following"
-                ? "No deals yet from posters you follow."
-                : "No deals posted yet."}
+              {mode === "following" ? (
+                <>
+                  No deals yet from posters you follow.{" "}
+                  <Link
+                    href="/posters"
+                    className="text-accent hover:underline"
+                  >
+                    Find posters to follow →
+                  </Link>
+                </>
+              ) : (
+                "No deals posted yet."
+              )}
             </p>
           )}
           {loading && (

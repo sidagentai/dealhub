@@ -39,6 +39,26 @@ cd backend
 
 The API starts on `http://localhost:8080` (health check at `/actuator/health`). Database connection is configurable via `DB_URL`, `DB_USERNAME`, `DB_PASSWORD` env vars. Schema is managed by Flyway migrations in `backend/src/main/resources/db/migration/`.
 
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Runs on `http://localhost:3000`, pointed at the backend via `NEXT_PUBLIC_API_URL` (defaults to localhost:8080).
+
+### Demo data
+
+With both servers running, seed realistic demo content (5 posters, ~17 deals, follows/saves/clicks) through the public API:
+
+```bash
+python3 scripts/seed-demo.py
+```
+
+Idempotent — safe to re-run. All demo accounts use password `password123`.
+
 ## Monetization
 
 Undecided at MVP stage by design — architecture doesn't assume a specific model. Click-tracking granularity is built to support revenue share, flat affiliate, or subscription later.

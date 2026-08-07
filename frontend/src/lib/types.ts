@@ -11,6 +11,17 @@ export interface UserProfile extends UserSummary {
   bio: string | null;
 }
 
+export interface PosterCard {
+  id: number;
+  handle: string;
+  displayName: string;
+  bio: string | null;
+  avatarUrl: string | null;
+  followerCount: number;
+  dealCount: number;
+  isFollowing: boolean;
+}
+
 export interface Deal {
   id: number;
   title: string;

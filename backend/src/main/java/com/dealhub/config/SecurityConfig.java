@@ -33,10 +33,10 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**", "/actuator/health", "/d/*").permitAll()
+                .requestMatchers("/auth/**", "/actuator/health", "/d/*", "/error").permitAll()
                 .requestMatchers(HttpMethod.GET,
                         "/categories", "/deals/*", "/feed", "/search",
-                        "/users/*", "/users/*/deals").permitAll()
+                        "/users/*", "/users/*/deals", "/posters").permitAll()
                 .anyRequest().authenticated())
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

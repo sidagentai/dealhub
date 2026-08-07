@@ -1,0 +1,35 @@
+# Java / Spring Boot
+target/
+*.class
+*.jar
+*.war
+.mvn/
+!.mvn/wrapper/maven-wrapper.jar
+HELP.md
+
+# Node / React / Expo / Next.js
+node_modules/
+.expo/
+.next/
+dist/
+build/
+out/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.iml
+.DS_Store
+
+# OS
+.DS_Store
+Thumbs.db

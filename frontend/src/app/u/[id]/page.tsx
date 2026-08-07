@@ -47,13 +47,13 @@ export default async function ProfilePage({ params }: PageProps<"/u/[id]">) {
             className="h-16 w-16 rounded-full object-cover"
           />
         ) : (
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-2xl font-bold text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full border border-line bg-accent-soft text-2xl font-semibold text-accent">
             {profile.displayName[0]?.toUpperCase()}
           </div>
         )}
         <div className="flex-1">
-          <h1 className="text-xl font-bold">{profile.displayName}</h1>
-          <p className="text-sm text-zinc-500">
+          <h1 className="text-xl font-semibold tracking-tight">{profile.displayName}</h1>
+          <p className="text-sm text-ink-dim">
             @{profile.handle} · {profile.followerCount} follower
             {profile.followerCount === 1 ? "" : "s"}
             {profile.isPoster && " · poster"}
@@ -72,7 +72,7 @@ export default async function ProfilePage({ params }: PageProps<"/u/[id]">) {
           ))}
         </div>
       ) : (
-        <p className="py-12 text-center text-zinc-500">No deals posted yet.</p>
+        <p className="py-12 text-center text-ink-dim">No deals posted yet.</p>
       )}
     </div>
   );

@@ -11,10 +11,10 @@ function NavLink({ href, label }: { href: string; label: string }) {
   return (
     <Link
       href={href}
-      className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+      className={`rounded-md px-3 py-1.5 text-[0.83rem] font-medium transition-colors duration-150 ${
         active
-          ? "bg-zinc-200 dark:bg-zinc-800"
-          : "text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-900"
+          ? "bg-surface-2 text-ink"
+          : "text-ink-dim hover:text-ink"
       }`}
     >
       {label}
@@ -27,12 +27,15 @@ export default function Nav() {
   const router = useRouter();
 
   return (
-    <header className="sticky top-0 z-10 border-b border-zinc-200 bg-white/90 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/90">
+    <header className="sticky top-0 z-10 border-b border-line bg-bg/70 backdrop-blur-xl">
       <div className="mx-auto flex h-14 w-full max-w-5xl items-center gap-2 px-4">
-        <Link href="/" className="mr-2 text-lg font-bold tracking-tight">
-          Deal<span className="text-emerald-600">Hub</span>
+        <Link
+          href="/"
+          className="mr-3 text-[1.05rem] font-semibold tracking-tight"
+        >
+          Deal<span className="text-accent">Hub</span>
         </Link>
-        <nav className="flex items-center gap-1">
+        <nav className="flex items-center gap-0.5">
           <NavLink href="/" label="Feed" />
           <NavLink href="/search" label="Search" />
           {user?.isPoster && <NavLink href="/post" label="Post a deal" />}
@@ -42,7 +45,7 @@ export default function Nav() {
             <>
               <Link
                 href={`/u/${user.id}`}
-                className="text-sm font-medium hover:underline"
+                className="text-[0.83rem] font-medium text-ink-dim transition-colors duration-150 hover:text-ink"
               >
                 @{user.handle}
               </Link>
@@ -51,7 +54,7 @@ export default function Nav() {
                   signOut();
                   router.push("/");
                 }}
-                className="rounded-md px-3 py-1.5 text-sm text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-900"
+                className="rounded-md px-3 py-1.5 text-[0.83rem] font-medium text-ink-dim transition-colors duration-150 hover:text-ink"
               >
                 Sign out
               </button>
@@ -60,14 +63,11 @@ export default function Nav() {
             <>
               <Link
                 href="/login"
-                className="rounded-md px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-900"
+                className="rounded-md px-3 py-1.5 text-[0.83rem] font-medium text-ink-dim transition-colors duration-150 hover:text-ink"
               >
                 Log in
               </Link>
-              <Link
-                href="/signup"
-                className="rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-700"
-              >
+              <Link href="/signup" className="btn-primary !py-1.5">
                 Sign up
               </Link>
             </>

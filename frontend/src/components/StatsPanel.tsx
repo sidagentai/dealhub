@@ -20,8 +20,8 @@ export default function StatsPanel({ userId }: { userId: number }) {
   if (!isOwner || !stats) return null;
 
   return (
-    <section className="mb-8 rounded-xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900">
-      <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-zinc-500">
+    <section className="mb-8 rounded-xl border border-line bg-surface p-5">
+      <h2 className="mb-4 text-xs font-semibold uppercase tracking-wider text-ink-dim">
         Your stats (only you can see this)
       </h2>
       <div className="mb-5 grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -32,12 +32,12 @@ export default function StatsPanel({ userId }: { userId: number }) {
       </div>
       {stats.topDeals.length > 0 && (
         <div>
-          <h3 className="mb-2 text-sm font-medium text-zinc-500">
+          <h3 className="mb-2 text-sm font-medium text-ink-dim">
             Top performing deals
           </h3>
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-left text-xs text-zinc-400">
+              <tr className="text-left text-xs text-ink-faint">
                 <th className="py-1 font-medium">Deal</th>
                 <th className="py-1 text-right font-medium">Clicks</th>
                 <th className="py-1 text-right font-medium">Saves</th>
@@ -47,7 +47,7 @@ export default function StatsPanel({ userId }: { userId: number }) {
               {stats.topDeals.map((d) => (
                 <tr
                   key={d.dealId}
-                  className="border-t border-zinc-100 dark:border-zinc-800"
+                  className="border-t border-line"
                 >
                   <td className="max-w-0 truncate py-2 pr-4">
                     <a href={`/deal/${d.dealId}`} className="hover:underline">
@@ -69,8 +69,8 @@ export default function StatsPanel({ userId }: { userId: number }) {
 function Stat({ label, value }: { label: string; value: number }) {
   return (
     <div>
-      <div className="text-2xl font-bold tabular-nums">{value}</div>
-      <div className="text-xs text-zinc-500">{label}</div>
+      <div className="font-mono text-2xl font-semibold tabular-nums">{value}</div>
+      <div className="text-xs text-ink-dim">{label}</div>
     </div>
   );
 }

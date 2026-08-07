@@ -51,41 +51,41 @@ export default async function DealPage({ params }: PageProps<"/deal/[id]">) {
           <img
             src={deal.imageUrl}
             alt={deal.title}
-            className="w-full rounded-xl border border-zinc-200 object-cover dark:border-zinc-800"
+            className="w-full rounded-xl border border-line object-cover"
           />
         ) : (
-          <div className="flex min-h-48 items-center justify-center rounded-xl bg-zinc-100 text-5xl dark:bg-zinc-800">
+          <div className="flex min-h-48 items-center justify-center rounded-xl border border-line bg-surface text-5xl">
             🏷️
           </div>
         )}
         <div>
-          <p className="mb-1 text-sm text-zinc-500">
+          <p className="mb-1 text-sm text-ink-dim">
             {deal.categoryName} · {deal.retailer}
           </p>
-          <h1 className="mb-3 text-2xl font-bold">{deal.title}</h1>
+          <h1 className="mb-3 text-2xl font-semibold tracking-tight">{deal.title}</h1>
           <div className="mb-4 flex items-baseline gap-3">
             {deal.price !== null && (
-              <span className="text-3xl font-bold text-emerald-600">
+              <span className="font-mono text-3xl font-semibold tabular-nums text-gain">
                 ${deal.price}
               </span>
             )}
             {deal.originalPrice !== null &&
               deal.originalPrice !== deal.price && (
-                <span className="text-lg text-zinc-400 line-through">
+                <span className="font-mono text-lg text-ink-faint line-through">
                   ${deal.originalPrice}
                 </span>
               )}
             {discount !== null && (
-              <span className="rounded bg-emerald-100 px-2 py-0.5 text-sm font-semibold text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400">
+              <span className="rounded bg-gain-soft px-2 py-0.5 text-sm font-semibold text-gain">
                 -{discount}%
               </span>
             )}
           </div>
-          <p className="mb-4 text-sm text-zinc-500">
+          <p className="mb-4 text-sm text-ink-dim">
             Posted by{" "}
             <Link
               href={`/u/${deal.poster.id}`}
-              className="font-medium text-zinc-900 hover:underline dark:text-zinc-100"
+              className="font-medium text-ink hover:underline"
             >
               @{deal.poster.handle}
             </Link>{" "}
@@ -97,7 +97,7 @@ export default async function DealPage({ params }: PageProps<"/deal/[id]">) {
       </div>
 
       {deal.description && (
-        <p className="mb-8 whitespace-pre-line text-zinc-700 dark:text-zinc-300">
+        <p className="mb-8 max-w-prose whitespace-pre-line leading-relaxed text-ink-dim">
           {deal.description}
         </p>
       )}

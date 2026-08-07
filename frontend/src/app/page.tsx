@@ -63,7 +63,7 @@ export default function FeedPage() {
 
   return (
     <div>
-      <div className="mb-4 flex gap-2">
+      <div className="mb-4 flex w-fit gap-1 rounded-lg border border-line bg-surface p-1">
         <TabButton
           active={mode === "trending"}
           onClick={() => setMode("trending")}
@@ -94,14 +94,14 @@ export default function FeedPage() {
       </div>
 
       {mode === "following" && !user && ready ? (
-        <p className="py-12 text-center text-zinc-500">
-          <Link href="/login" className="text-emerald-600 hover:underline">
+        <p className="py-12 text-center text-ink-dim">
+          <Link href="/login" className="text-accent hover:underline">
             Log in
           </Link>{" "}
           to see deals from posters you follow.
         </p>
       ) : error ? (
-        <p className="py-12 text-center text-red-600">{error}</p>
+        <p className="py-12 text-center text-red-400">{error}</p>
       ) : (
         <>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -110,14 +110,14 @@ export default function FeedPage() {
             ))}
           </div>
           {!loading && deals.length === 0 && (
-            <p className="py-12 text-center text-zinc-500">
+            <p className="py-12 text-center text-ink-dim">
               {mode === "following"
                 ? "No deals yet from posters you follow."
                 : "No deals posted yet."}
             </p>
           )}
           {loading && (
-            <p className="py-8 text-center text-zinc-400">Loading…</p>
+            <p className="py-8 text-center text-ink-faint">Loading…</p>
           )}
           <div ref={sentinel} />
         </>
@@ -138,10 +138,10 @@ function TabButton({
   return (
     <button
       onClick={onClick}
-      className={`rounded-full px-4 py-1.5 text-sm font-medium ${
+      className={`rounded-lg px-4 py-1.5 text-sm font-medium transition-colors duration-150 ${
         active
-          ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
-          : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-900 dark:text-zinc-400"
+          ? "bg-surface-2 text-ink shadow-[inset_0_1px_0_#ffffff14]"
+          : "text-ink-dim hover:text-ink"
       }`}
     >
       {children}
@@ -161,10 +161,10 @@ function Chip({
   return (
     <button
       onClick={onClick}
-      className={`whitespace-nowrap rounded-full border px-3 py-1 text-xs font-medium ${
+      className={`whitespace-nowrap rounded-full border px-3 py-1 text-xs font-medium transition-colors duration-150 ${
         active
-          ? "border-emerald-600 bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400"
-          : "border-zinc-200 text-zinc-600 hover:border-zinc-400 dark:border-zinc-800 dark:text-zinc-400"
+          ? "border-accent/50 bg-accent-soft text-ink"
+          : "border-line text-ink-dim hover:border-line-strong hover:text-ink"
       }`}
     >
       {children}

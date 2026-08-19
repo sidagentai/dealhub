@@ -51,18 +51,18 @@ export default async function DealPage({ params }: PageProps<"/deal/[id]">) {
           <img
             src={deal.imageUrl}
             alt={deal.title}
-            className="w-full rounded-xl border border-line object-cover"
+            className="w-full rounded-none border border-line object-cover"
           />
         ) : (
-          <div className="flex min-h-48 items-center justify-center rounded-xl border border-line bg-surface text-5xl">
+          <div className="flex min-h-48 items-center justify-center rounded-none border border-line bg-surface text-5xl">
             🏷️
           </div>
         )}
         <div>
-          <p className="mb-1 text-sm text-ink-dim">
+          <p className="meta mb-2">
             {deal.categoryName} · {deal.retailer}
           </p>
-          <h1 className="mb-3 text-2xl font-semibold tracking-tight">{deal.title}</h1>
+          <h1 className="font-display mb-3 text-3xl font-medium tracking-tight">{deal.title}</h1>
           <div className="mb-4 flex items-baseline gap-3">
             {deal.price !== null && (
               <span className="font-mono text-3xl font-semibold tabular-nums text-gain">

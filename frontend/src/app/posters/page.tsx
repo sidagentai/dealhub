@@ -24,7 +24,7 @@ export default function PostersPage() {
 
   return (
     <div>
-      <h1 className="mb-1 text-2xl font-semibold tracking-tight">Posters</h1>
+      <h1 className="font-display mb-1 text-3xl font-medium tracking-tight">Posters</h1>
       <p className="mb-8 text-sm text-ink-dim">
         The people finding the deals. Follow them and their posts land in your
         Following feed.
@@ -37,7 +37,7 @@ export default function PostersPage() {
           {posters.map((poster) => (
             <article
               key={poster.id}
-              className="card-hover flex gap-4 rounded-xl border border-line bg-surface p-5"
+              className="card-hover flex gap-4 rounded-none border border-line bg-surface p-5"
             >
               <Link href={`/u/${poster.id}`} className="shrink-0">
                 {poster.avatarUrl ? (
@@ -48,7 +48,7 @@ export default function PostersPage() {
                     className="h-14 w-14 rounded-full border border-line object-cover"
                   />
                 ) : (
-                  <div className="flex h-14 w-14 items-center justify-center rounded-full border border-line bg-accent-soft text-xl font-semibold text-accent">
+                  <div className="font-display flex h-14 w-14 items-center justify-center rounded-full border border-line bg-surface-2 text-xl font-semibold text-ink">
                     {poster.displayName[0]?.toUpperCase()}
                   </div>
                 )}
@@ -62,7 +62,7 @@ export default function PostersPage() {
                     >
                       {poster.displayName}
                     </Link>
-                    <p className="text-xs text-ink-dim">
+                    <p className="font-mono text-[0.72rem] text-ink-dim">
                       @{poster.handle} ·{" "}
                       <span className="font-mono tabular-nums">
                         {poster.followerCount}

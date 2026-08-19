@@ -1,26 +1,28 @@
 @import "tailwindcss";
 
 /*
- * DealHub design system — Linear-inspired.
- * Committed dark theme: layered near-black surfaces, hairline borders,
- * one indigo accent for interaction, green reserved for the money.
+ * DealHub design system — editorial monochrome.
+ * Deep slate ground, off-white ink, crisp 1px hairlines, sharp edges.
+ * One vivid accent (#FF3300) reserved strictly for interactive triggers;
+ * green remains the exclusive signal for money (prices, discounts, history).
  */
 @theme {
-  --color-bg: #08090a;
-  --color-surface: #0f1011;
-  --color-surface-2: #16171a;
-  --color-ink: #f7f8f8;
-  --color-ink-dim: #8a8f98;
-  --color-ink-faint: #5e6369;
-  --color-line: #ffffff14;
-  --color-line-strong: #ffffff26;
-  --color-accent: #5e6ad2;
-  --color-accent-soft: #5e6ad21f;
+  --color-bg: #0a0a0c;
+  --color-surface: #101014;
+  --color-surface-2: #17171c;
+  --color-ink: #f4f4f0;
+  --color-ink-dim: #9a9a94;
+  --color-ink-faint: #5d5d58;
+  --color-line: #ffffff1a;
+  --color-line-strong: #ffffff38;
+  --color-accent: #ff3300;
+  --color-accent-soft: #ff330026;
   --color-gain: #4cb782;
   --color-gain-soft: #4cb7821f;
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
 }
 
 body {
@@ -31,102 +33,117 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Ambient aura behind the header, Linear-style: subtle, fixed, non-interactive */
-.aura {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background:
-    radial-gradient(40rem 18rem at 50% -6rem, #5e6ad226, transparent 70%),
-    radial-gradient(30rem 14rem at 85% -4rem, #4cb78214, transparent 70%);
+/* Mono metadata label: the utility voice of the system */
+.meta {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-faint);
 }
 
-/* Interactive-card hover: lift + border lightening, transform/opacity only */
+/* Card surface: sharp, hairline, no shadows. Hover sharpens the border. */
 .card-hover {
-  transition:
-    transform 0.15s ease,
-    border-color 0.15s ease,
-    box-shadow 0.15s ease;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 .card-hover:hover {
-  transform: translateY(-2px);
   border-color: var(--color-line-strong);
-  box-shadow: 0 8px 24px #00000066;
-}
-@media (prefers-reduced-motion: reduce) {
-  .card-hover,
-  .card-hover:hover {
-    transition: none;
-    transform: none;
-  }
+  background-color: var(--color-surface-2);
 }
 
-/* Shared form control look */
+/* Shared form control */
 .field {
   width: 100%;
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   border: 1px solid var(--color-line);
   background: var(--color-surface);
   padding: 0.5rem 0.75rem;
   font-size: 0.875rem;
   color: var(--color-ink);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color 0.15s ease;
 }
 .field::placeholder {
   color: var(--color-ink-faint);
 }
 .field:focus {
   outline: none;
-  border-color: #5e6ad280;
-  box-shadow: 0 0 0 3px #5e6ad226;
+  border-color: var(--color-accent);
+}
+.field:disabled {
+  opacity: 0.4;
 }
 
-/* Primary action button */
+/* Primary trigger: the only place the accent paints a surface */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   background: var(--color-accent);
   color: #fff;
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   padding: 0.5rem 1rem;
-  box-shadow: inset 0 1px 0 #ffffff1f;
-  transition: filter 0.15s ease, transform 0.15s ease;
+  transition: filter 0.15s ease, transform 0.1s ease;
 }
 .btn-primary:hover {
-  filter: brightness(1.12);
+  filter: brightness(1.15);
 }
 .btn-primary:active {
-  transform: translateY(1px);
+  transform: scale(0.95);
 }
 .btn-primary:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   filter: none;
+  transform: none;
 }
 
-/* Quiet secondary / ghost button */
+/* Quiet trigger */
 .btn-ghost {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   border: 1px solid var(--color-line);
   color: var(--color-ink-dim);
   font-size: 0.875rem;
   font-weight: 500;
   padding: 0.5rem 0.85rem;
-  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  transition: color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
 }
 .btn-ghost:hover {
   color: var(--color-ink);
   border-color: var(--color-line-strong);
-  background: var(--color-surface-2);
+}
+.btn-ghost:active {
+  transform: scale(0.95);
 }
 .btn-ghost:disabled {
   opacity: 0.4;
+  transform: none;
+}
+
+/* Scroll-triggered reveal (landing only); motion-safe by media query */
+.reveal {
+  opacity: 0;
+  translate: 0 14px;
+  transition: opacity 0.6s ease, translate 0.6s ease;
+}
+.reveal[data-shown] {
+  opacity: 1;
+  translate: 0 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    translate: none;
+    transition: none;
+  }
+  .btn-primary:active,
+  .btn-ghost:active {
+    transform: none;
+  }
 }
 
 :focus-visible {

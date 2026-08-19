@@ -28,8 +28,8 @@ export default function FollowButton({
       onClick={toggle}
       className={
         following
-          ? "btn-ghost rounded-full px-5 !py-1.5"
-          : "btn-primary rounded-full px-5 !py-1.5"
+          ? "btn-ghost px-5 !py-1.5"
+          : "btn-primary px-5 !py-1.5"
       }
     >
       {following ? "Following" : "Follow"}

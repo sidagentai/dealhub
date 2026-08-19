@@ -83,7 +83,7 @@ export default function PostDealPage() {
 
   return (
     <div className="mx-auto max-w-xl">
-      <h1 className="mb-6 text-2xl font-semibold tracking-tight">Post a deal</h1>
+      <h1 className="font-display mb-6 text-3xl font-medium tracking-tight">Post a deal</h1>
       <form onSubmit={onSubmit} className="space-y-4">
         <Field label="Deal link (your affiliate URL)">
           <input

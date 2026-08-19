@@ -20,8 +20,8 @@ export default function StatsPanel({ userId }: { userId: number }) {
   if (!isOwner || !stats) return null;
 
   return (
-    <section className="mb-8 rounded-xl border border-line bg-surface p-5">
-      <h2 className="mb-4 text-xs font-semibold uppercase tracking-wider text-ink-dim">
+    <section className="mb-8 rounded-none border border-line bg-surface p-5">
+      <h2 className="meta mb-4">
         Your stats (only you can see this)
       </h2>
       <div className="mb-5 grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -37,7 +37,7 @@ export default function StatsPanel({ userId }: { userId: number }) {
           </h3>
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-left text-xs text-ink-faint">
+              <tr className="meta text-left">
                 <th className="py-1 font-medium">Deal</th>
                 <th className="py-1 text-right font-medium">Clicks</th>
                 <th className="py-1 text-right font-medium">Saves</th>
@@ -70,7 +70,7 @@ function Stat({ label, value }: { label: string; value: number }) {
   return (
     <div>
       <div className="font-mono text-2xl font-semibold tabular-nums">{value}</div>
-      <div className="text-xs text-ink-dim">{label}</div>
+      <div className="meta mt-0.5">{label}</div>
     </div>
   );
 }

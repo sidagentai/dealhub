@@ -25,12 +25,12 @@ export default function PriceChart({ history }: { history: PricePoint[] }) {
 
   return (
     <div>
-      <h2 className="mb-2 text-xs font-semibold uppercase tracking-wider text-ink-dim">
+      <h2 className="meta mb-2">
         Price history
       </h2>
       <svg
         viewBox={`0 0 ${width} ${height}`}
-        className="w-full max-w-md rounded-lg border border-line bg-surface"
+        className="w-full max-w-md rounded-none border border-line bg-surface"
         role="img"
         aria-label={`Price went from $${first} to $${last} over ${history.length} recorded points`}
       >
@@ -43,7 +43,7 @@ export default function PriceChart({ history }: { history: PricePoint[] }) {
           strokeLinecap="round"
         />
       </svg>
-      <p className="mt-1 text-xs text-ink-dim">
+      <p className="font-mono mt-1 text-[0.72rem] text-ink-dim">
         ${min} – ${max} across {history.length} recorded prices
       </p>
     </div>

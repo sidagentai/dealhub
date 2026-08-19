@@ -33,8 +33,8 @@ export default function DealCard({ deal }: { deal: Deal }) {
   }
 
   return (
-    <article className="card-hover flex flex-col overflow-hidden rounded-xl border border-line bg-surface">
-      <Link href={`/deal/${deal.id}`} className="block">
+    <article className="card-hover flex flex-col overflow-hidden rounded-none border border-line bg-surface">
+      <Link href={`/deal/${deal.id}`} className="block border-b border-line">
         {deal.imageUrl ? (
           // retailer-hosted images come from arbitrary domains; plain img on purpose
           // eslint-disable-next-line @next/next/no-img-element
@@ -62,7 +62,7 @@ export default function DealCard({ deal }: { deal: Deal }) {
             </span>
           )}
           {discount !== null && (
-            <span className="rounded bg-gain-soft px-1.5 py-0.5 text-xs font-semibold text-gain">
+            <span className="rounded-none bg-gain-soft px-1.5 py-0.5 text-xs font-semibold text-gain">
               -{discount}%
             </span>
           )}
@@ -73,11 +73,11 @@ export default function DealCard({ deal }: { deal: Deal }) {
         >
           {deal.title}
         </Link>
-        <div className="text-xs text-ink-dim">
+        <div className="meta">
           {deal.retailer} ·{" "}
           <Link
             href={`/u/${deal.poster.id}`}
-            className="text-ink-dim transition-colors duration-150 hover:text-ink"
+            className="transition-colors duration-150 hover:text-ink"
           >
             @{deal.poster.handle}
           </Link>
@@ -96,7 +96,7 @@ export default function DealCard({ deal }: { deal: Deal }) {
             disabled={!user}
             title={user ? "Save" : "Log in to save"}
             className={`btn-ghost !py-1.5 ${
-              saved ? "!border-accent/50 !text-accent" : ""
+              saved ? "!border-accent !text-accent" : ""
             }`}
           >
             ♥ {saveCount}

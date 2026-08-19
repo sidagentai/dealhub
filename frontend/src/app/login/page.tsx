@@ -29,7 +29,7 @@ export default function LoginPage() {
 
   return (
     <div className="mx-auto mt-10 max-w-sm">
-      <h1 className="mb-6 text-2xl font-semibold tracking-tight">Log in</h1>
+      <h1 className="font-display mb-6 text-3xl font-medium tracking-tight">Log in</h1>
       <form onSubmit={onSubmit} className="space-y-4">
         <input
           className="field"

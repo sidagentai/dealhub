@@ -40,7 +40,7 @@ export default function SignupPage() {
 
   return (
     <div className="mx-auto mt-10 max-w-sm">
-      <h1 className="mb-6 text-2xl font-semibold tracking-tight">Create your account</h1>
+      <h1 className="font-display mb-6 text-3xl font-medium tracking-tight">Create your account</h1>
       <form onSubmit={onSubmit} className="space-y-4">
         <input
           className={inputClass}

@@ -63,7 +63,7 @@ export default function FeedPage() {
 
   return (
     <div>
-      <div className="mb-4 flex w-fit gap-1 rounded-lg border border-line bg-surface p-1">
+      <div className="mb-6 flex w-fit gap-6 border-b border-line">
         <TabButton
           active={mode === "trending"}
           onClick={() => setMode("trending")}
@@ -148,10 +148,10 @@ function TabButton({
   return (
     <button
       onClick={onClick}
-      className={`rounded-lg px-4 py-1.5 text-sm font-medium transition-colors duration-150 ${
+      className={`border-b-2 px-1 pb-2 text-sm font-medium transition-colors duration-150 ${
         active
-          ? "bg-surface-2 text-ink shadow-[inset_0_1px_0_#ffffff14]"
-          : "text-ink-dim hover:text-ink"
+          ? "border-accent text-ink"
+          : "border-transparent text-ink-dim hover:text-ink"
       }`}
     >
       {children}
@@ -171,10 +171,10 @@ function Chip({
   return (
     <button
       onClick={onClick}
-      className={`whitespace-nowrap rounded-full border px-3 py-1 text-xs font-medium transition-colors duration-150 ${
+      className={`meta whitespace-nowrap rounded-none border px-3 py-1.5 transition-colors duration-150 ${
         active
-          ? "border-accent/50 bg-accent-soft text-ink"
-          : "border-line text-ink-dim hover:border-line-strong hover:text-ink"
+          ? "border-accent !text-accent"
+          : "border-line hover:border-line-strong hover:!text-ink"
       }`}
     >
       {children}

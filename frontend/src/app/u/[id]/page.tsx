@@ -47,12 +47,12 @@ export default async function ProfilePage({ params }: PageProps<"/u/[id]">) {
             className="h-16 w-16 rounded-full object-cover"
           />
         ) : (
-          <div className="flex h-16 w-16 items-center justify-center rounded-full border border-line bg-accent-soft text-2xl font-semibold text-accent">
+          <div className="font-display flex h-16 w-16 items-center justify-center rounded-full border border-line bg-surface-2 text-2xl font-semibold text-ink">
             {profile.displayName[0]?.toUpperCase()}
           </div>
         )}
         <div className="flex-1">
-          <h1 className="text-xl font-semibold tracking-tight">{profile.displayName}</h1>
+          <h1 className="font-display text-2xl font-medium tracking-tight">{profile.displayName}</h1>
           <p className="text-sm text-ink-dim">
             @{profile.handle} · {profile.followerCount} follower
             {profile.followerCount === 1 ? "" : "s"}
